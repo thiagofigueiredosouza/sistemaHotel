@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>Sistema de Reserva de Hotel</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="btn-outline-primary" href="#">Hotel</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+			<li class="nav-item">
+				<form name="logoutForm" th:action="@{/logout}" method="post">
+					<label>Olá, <span sec:authentication="name">Usuário</span></label>
+					<input class="btn btn-outline-danger" type="submit" value="Sair"/>
+				</form>
+			</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container my-2">
+		<a th:href="@{/rh/clientes/nova}" class="btn btn-primary btn-sm mb-3">Realizar reserva</a>
+		<h1>Reservas</h1>
+		<table border="1" class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>CPF</th>
+					<th>Telefone</th>
+					<th>Quarto</th>
+					<th>Entrada</th>
+					<th>Saída</th>
+					<th>Pagamento</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cliente : ${listaClientes}">
+					<td th:text="${cliente.nome}"></td>
+					<td th:text="${cliente.cpf}"></td>
+					<td th:text="${cliente.telefone}"></td>
+					<td th:text="${cliente.quarto}"></td>
+					<td th:text="${cliente.dataNascimento}"></td>
+					<td th:text="${cliente.dataSaida}"></td>
+					<td th:text="${cliente.pagamento}"></td>
+					<td>	
+						<a th:href="@{/rh/clientes/{id}(id=${cliente.id})}" class="btn btn-primary">Alterar dados</a>
+						<a th:href="@{/rh/clientes/excluir/{id}(id=${cliente.id})}" class="btn btn-danger">Check-out</a>		
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
